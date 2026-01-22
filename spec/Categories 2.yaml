@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: Marketplace API - Categories
+  version: 1.0.0
+paths:
+  /categories:
+    get:
+      summary: Get all categories
+      description: Retrieve a list of all categories available in the marketplace.
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination.
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: Number of items per page for pagination.
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: List of categories retrieved successfully.
+          content:
+            application/json:
+              example:
+                - categoryId: 1
+                  name: "Electronics"
+                  shortDescription: "Explore the latest in electronic gadgets."
+                  fullDescription: "Discover a wide range of electronic devices, from smartphones to smart home devices."
+                  featureImage: "https://example.com/electronics.jpg"
+                  status: "Active"
+                  path: "/Electronics"  # Full path in the hierarchy
+                  parentID: null
+                  createdAt: "2023-01-01T12:00:00Z"
+                  updatedAt: "2023-01-10T12:00:00Z"
+
+    post:
+      summary: Create a new category
+      description: Add a new category to the marketplace.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Books"
+              shortDescription: "Immerse yourself in captivating stories."
+              fullDescription: "Explore a diverse collection of books for every reader."
+              featureImage: "https://example.com/books.jpg"
+              status: "Active"
+              parentID: null
+      responses:
+        '201':
+          description: Category created successfully.
+          content:
+            application/json:
+              example:
+                categoryId: 3
+                name: "Books"
+                shortDescription: "Immerse yourself in captivating stories."
+                fullDescription: "Explore a diverse collection of books for every reader."
+                featureImage: "https://example.com/books.jpg"
+                status: "Active"
+                path: "/Books"
+                parentID: null
+                createdAt: "2025-01-01T12:00:00Z"
+                updatedAt: "2025-01-01T12:00:00Z"
+
+  /categories/{categoryId}:
+    get:
+      summary: Get a specific category
+      description: Retrieve details of a specific category by ID.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: ID of the category
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Category details retrieved successfully.
+          content:
+            application/json:
+              example:
+                categoryId: 1
+                name: "Electronics"
+                shortDescription: "Explore the latest in electronic gadgets."
+                fullDescription: "Discover a wide range of electronic devices, from smartphones to smart home devices."
+                featureImage: "https://example.com/electronics.jpg"
+                status: "Active"
+                path: "/Electronics"
+                parentID: null
+                createdAt: "2023-01-01T12:00:00Z"
+                updatedAt: "2023-01-10T12:00:00Z"
+
+    put:
+      summary: Update a category
+      description: Update the details of a specific category by ID.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: ID of the category
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              name: "Updated Electronics"
+              shortDescription: "Updated description for electronics."
+              fullDescription: "Updated details about our electronic gadgets and devices."
+              featureImage: "https://example.com/updated-electronics.jpg"
+              status: "Active"
+              parentID: null
+      responses:
+        '200':
+          description: Category updated successfully.
+          content:
+            application/json:
+              example:
+                categoryId: 1
+                name: "Updated Electronics"
+                shortDescription: "Updated description for electronics."
+                fullDescription: "Updated details about our electronic gadgets and devices."
+                featureImage: "https://example.com/updated-electronics.jpg"
+                status: "Active"
+                path: "/UpdatedElectronics"
+                parentID: null
+                createdAt: "2023-01-01T12:00:00Z"
+                updatedAt: "2025-01-01T12:00:00Z"
+
+    delete:
+      summary: Delete a category
+      description: Delete a specific category by ID.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: ID of the category
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Category deleted successfully.
+
+  /categories/{categoryId}/status:
+    put:
+      summary: Update category status
+      description: Change the status of a specific category (e.g., Active/Inactive).
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: ID of the category
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example:
+              status: "Inactive"
+      responses:
+        '200':
+          description: Status updated successfully.
+          content:
+            application/json:
+              example:
+                categoryId: 1
+                name: "Electronics"
+                status: "Inactive"
+                updatedAt: "2025-01-01T12:00:00Z"

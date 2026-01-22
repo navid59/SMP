@@ -1,0 +1,254 @@
+openapi: 3.0.0
+info:
+  title: Marketplace API
+  version: 1.0.0
+paths:
+  /categories:
+    get:
+      summary: Get all categories
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: [{categoryId: 1, name: "Category1"}, {categoryId: 2, name: "Category2"}]
+
+    post:
+      summary: Create a new category
+      requestBody:
+        content:
+          application/json:
+            example: {name: "New Category"}
+      responses:
+        '201':
+          description: Category created successfully
+
+  /products:
+    get:
+      summary: Get all products
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: [{productId: 1, name: "Product1", price: 19.99, category: "Category1"}, {productId: 2, name: "Product2", price: 29.99, category: "Category2"}]
+
+  /companies:
+    get:
+      summary: Get all companies
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: [{companyId: 1, name: "Company1", totalProducts: 50, totalUsers: 10}, {companyId: 2, name: "Company2", totalProducts: 30, totalUsers: 5}]
+
+    post:
+      summary: Create a new company
+      requestBody:
+        content:
+          application/json:
+            example: {name: "New Company"}
+      responses:
+        '201':
+          description: Company created successfully
+
+  /companies/{companyId}/users:
+    get:
+      summary: Get all users associated with a company
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          description: ID of the company
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: [{userId: 1, username: "User1"}, {userId: 2, username: "User2"}]
+
+    post:
+      summary: Add a user to a company
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          description: ID of the company
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            example: {userId: 3, username: "User3"}
+      responses:
+        '201':
+          description: User added to the company successfully
+
+  /buyers:
+    get:
+      summary: Get all buyers
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: [{buyerId: 1, username: "Buyer1"}, {buyerId: 2, username: "Buyer2"}]
+
+    post:
+      summary: Create a new buyer
+      requestBody:
+        content:
+          application/json:
+            example: {username: "NewBuyer", email: "newbuyer@example.com", subscription: true}
+      responses:
+        '201':
+          description: Buyer created successfully
+
+  /buyers/{buyerId}/cart:
+    get:
+      summary: Get the buyer's shopping cart
+      parameters:
+        - name: buyerId
+          in: path
+          required: true
+          description: ID of the buyer
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: [{productId: 1, quantity: 2}, {productId: 2, quantity: 1}]
+
+    post:
+      summary: Add a product to the buyer's shopping cart
+      parameters:
+        - name: buyerId
+          in: path
+          required: true
+          description: ID of the buyer
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            example: {productId: 3, quantity: 1}
+      responses:
+        '201':
+          description: Product added to the shopping cart successfully
+
+  /buyers/{buyerId}/checkout:
+    post:
+      summary: Initiate the checkout process
+      parameters:
+        - name: buyerId
+          in: path
+          required: true
+          description: ID of the buyer
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Checkout initiated successfully
+          content:
+            application/json:
+              example: {orderId: 1}
+
+  /buyers/{buyerId}/orders:
+    get:
+      summary: Get all orders placed by a buyer
+      parameters:
+        - name: buyerId
+          in: path
+          required: true
+          description: ID of the buyer
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: [{orderId: 1, products: [{productId: 1, quantity: 3}, {productId: 2, quantity: 1}], total: 64.97}]
+
+  /buyers/{buyerId}/orders/{orderId}/review:
+    get:
+      summary: Review the order before confirmation
+      parameters:
+        - name: buyerId
+          in: path
+          required: true
+          description: ID of the buyer
+          schema:
+            type: integer
+        - name: orderId
+          in: path
+          required: true
+          description: ID of the order
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: {orderId: 1, products: [{productId: 1, quantity: 3}, {productId: 2, quantity: 1}], total: 64.97}
+
+  /buyers/{buyerId}/orders/{orderId}/confirm:
+    post:
+      summary: Confirm the purchase and place the order
+      parameters:
+        - name: buyerId
+          in: path
+          required: true
+          description: ID of the buyer
+          schema:
+            type: integer
+        - name: orderId
+          in: path
+          required: true
+          description: ID of the order
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: Purchase confirmed, order placed successfully
+
+  /buyers/{buyerId}/addresses:
+    get:
+      summary: Get all addresses associated with a buyer
+      parameters:
+        - name: buyerId
+          in: path
+          required: true
+          description: ID of the buyer
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: [{addressId: 1, type: "Shipping", street: "123 Main St", city: "City1", country: "Country1"}, {addressId: 2, type: "Billing", street: "456 Second St", city: "City2", country: "Country2"}]
+
+    post:
+      summary: Add a new address for a buyer
+      parameters:
+        - name: buyerId
+          in: path
+          required: true
+          description: ID of the buyer
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            example: {type: "Shipping", street: "789 Third St", city: "City3", country: "Country3"}
+      responses:
+        '201':
+          description: Address added successfully
+

@@ -1,0 +1,144 @@
+openapi: 3.0.0
+info:
+  title: Marketplace API - Categories
+  version: 1.0.0
+paths:
+  /categories:
+    get:
+      summary: Get all categories
+      description: Retrieve a list of all categories available in the marketplace.
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: 
+                - categoryId: 1
+                  name: "Electronics"
+                  shortDescription: "Explore the latest in electronic gadgets."
+                  fullDescription: "Discover a wide range of electronic devices, from smartphones to smart home devices."
+                  featureImage: "https://example.com/electronics.jpg"
+                  status: "Active"
+                  path: "/Electronics"  # Full path in the hierarchy
+                  parentID: null
+
+    post:
+      summary: Create a new category
+      description: Add a new category to the marketplace.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example: 
+              name: "Books"
+              shortDescription: "Immerse yourself in captivating stories."
+              fullDescription: "Explore a diverse collection of books for every reader."
+              featureImage: "https://example.com/books.jpg"
+              status: "Active"
+              parentID: null
+      responses:
+        '201':
+          description: Category created successfully
+          content:
+            application/json:
+              example: 
+                categoryId: 3
+                name: "Books"
+                shortDescription: "Immerse yourself in captivating stories."
+                fullDescription: "Explore a diverse collection of books for every reader."
+                featureImage: "https://example.com/books.jpg"
+                status: "Active"
+                path: "/Books"  # Full path in the hierarchy
+                parentID: null
+
+  /categories/{categoryId}:
+    get:
+      summary: Get a specific category
+      description: Retrieve details of a specific category by ID.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: ID of the category
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: 
+                categoryId: 1
+                name: "Electronics"
+                shortDescription: "Explore the latest in electronic gadgets."
+                fullDescription: "Discover a wide range of electronic devices, from smartphones to smart home devices."
+                featureImage: "https://example.com/electronics.jpg"
+                status: "Active"
+                path: "/Electronics"  # Full path in the hierarchy
+                parentID: null
+
+    put:
+      summary: Update a category
+      description: Update the details of a specific category by ID.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: ID of the category
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example: 
+              name: "Updated Electronics"
+              shortDescription: "Updated description for electronics."
+              fullDescription: "Updated details about our electronic gadgets and devices."
+              featureImage: "https://example.com/updated-electronics.jpg"
+              status: "Active"
+              parentID: null
+      responses:
+        '200':
+          description: Category updated successfully
+          content:
+            application/json:
+              example: 
+                categoryId: 1
+                name: "Updated Electronics"
+                shortDescription: "Updated description for electronics."
+                fullDescription: "Updated details about our electronic gadgets and devices."
+                featureImage: "https://example.com/updated-electronics.jpg"
+                status: "Active"
+                path: "/UpdatedElectronics"  # Full path in the hierarchy
+                parentID: null
+
+    delete:
+      summary: Delete a category
+      description: Delete a specific category by ID.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: ID of the category
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Category deleted successfully
+

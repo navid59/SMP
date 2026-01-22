@@ -1,0 +1,19 @@
+openapi: 3.0.0
+info:
+  title: Marketplace API - Checkout & Cart
+  version: 1.0.0
+paths:
+  /buyers/{buyerId}/checkout:
+    post:
+      summary: Initiate the checkout process
+      # ... (existing checkout initiation details)
+
+  /buyers/{buyerId}/cart:
+    get:
+      summary: Get the buyer's shopping cart
+      # ... (existing shopping cart endpoint details)
+
+    post:
+      summary: Add a product to the buyer's shopping cart
+      # ... (existing add product to cart details)
+

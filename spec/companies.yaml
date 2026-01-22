@@ -1,0 +1,288 @@
+openapi: 3.0.0
+info:
+  title: Marketplace API - Companies
+  version: 1.0.0
+paths:
+  /companies:
+    get:
+      summary: Get companies
+      description: Retrieve a list of companies in the marketplace based on filters.
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: name
+          in: query
+          description: Company name for filtering
+          required: false
+          schema:
+            type: string
+        - name: domainOfActivity
+          in: query
+          description: Domain of activity for filtering
+          required: false
+          schema:
+            type: string
+        - name: companyType
+          in: query
+          description: Type of company for filtering
+          required: false
+          schema:
+            type: string
+        - name: contactPerson
+          in: query
+          description: Contact person for filtering
+          required: false
+          schema:
+            type: string
+        - name: contactEmail
+          in: query
+          description: Contact email for filtering
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: 
+                - companyId: 1
+                  name: "Tech Solutions"
+                  description: "Innovative tech solutions provider."
+                  logo: "https://example.com/tech-solutions-logo.jpg"
+                  country: "United States"
+                  city: "San Francisco"
+                  address: "123 Tech Street"
+                  postalCode: "12345"
+                  contactEmail: "info@techsolutions.com"
+                  contactPhone: "+1-555-123-4567"
+                  contactPerson: "John Doe"
+                  website: "https://www.techsolutions.com"
+                  domainOfActivity: "Technology"
+                  mcc: "1234"
+                  companyType: "Producer"
+                  users:
+                    - userId: 101
+                      username: "tech_user1"
+                      email: "user1@techsolutions.com"
+                    - userId: 102
+                      username: "tech_user2"
+                      email: "user2@techsolutions.com"
+                  metaTags: ["tech", "innovation", "solutions"]
+                  keywords: ["technology", "services", "innovation"]
+                  status: "Active"
+                - companyId: 2
+                  name: "Fashion Trends"
+                  description: "Trendy and fashionable clothing store."
+                  logo: "https://example.com/fashion-trends-logo.jpg"
+                  country: "United Kingdom"
+                  city: "London"
+                  address: "456 Fashion Avenue"
+                  postalCode: "56789"
+                  contactEmail: "info@fashiontrends.com"
+                  contactPhone: "+44-20-1234-5678"
+                  contactPerson: "Jane Smith"
+                  website: "https://www.fashiontrends.com"
+                  domainOfActivity: "Fashion"
+                  mcc: "1234"
+                  companyType: "Distributor"
+                  users:
+                    - userId: 201
+                      username: "fashion_user1"
+                      email: "user1@fashiontrends.com"
+                    - userId: 202
+                      username: "fashion_user2"
+                      email: "user2@fashiontrends.com"
+                  metaTags: ["fashion", "style", "clothing"]
+                  keywords: ["trends", "apparel", "fashion"]
+                  status: "Active"
+
+    post:
+      summary: Create a new company
+      description: Add a new company to the marketplace.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example: 
+              name: "Electro Gadgets"
+              description: "Specialized in electronic gadgets."
+              logo: "https://example.com/electro-gadgets-logo.jpg"
+              country: "Germany"
+              city: "Berlin"
+              address: "789 Gadget Street"
+              postalCode: "98765"
+              contactEmail: "info@electrogadgets.com"
+              contactPhone: "+49-30-9876-5432"
+              contactPerson: "Peter Müller"
+              website: "https://www.electrogadgets.com"
+              domainOfActivity: "Electronics"
+              mcc: "1234"
+              companyType: "Sub Reseller"
+              users:
+                - userId: 301
+                  username: "electro_user1"
+                  email: "user1@electrogadgets.com"
+                - userId: 302
+                  username: "electro_user2"
+                  email: "user2@electrogadgets.com"
+              metaTags: ["electronics", "gadgets", "innovation"]
+              keywords: ["technology", "devices", "electronics"]
+              status: "Active"
+      responses:
+        '201':
+          description: Company created successfully
+          content:
+            application/json:
+              example: 
+                companyId: 3
+                name: "Electro Gadgets"
+                description: "Specialized in electronic gadgets."
+                logo: "https://example.com/electro-gadgets-logo.jpg"
+                country: "Germany"
+                city: "Berlin"
+                address: "789 Gadget Street"
+                postalCode: "98765"
+                contactEmail: "info@electrogadgets.com"
+                contactPhone: "+49-30-9876-5432"
+                contactPerson: "Peter Müller"
+                website: "https://www.electrogadgets.com"
+                domainOfActivity: "Electronics"
+                mcc: "1234"
+                companyType: "Sub Reseller"
+                users:
+                  - userId: 301
+                    username: "electro_user1"
+                    email: "user1@electrogadgets.com"
+                  - userId: 302
+                    username: "electro_user2"
+                    email: "user2@electrogadgets.com"
+                metaTags: ["electronics", "gadgets", "innovation"]
+                keywords: ["technology", "devices", "electronics"]
+                status: "Active"
+
+  /companies/{companyId}:
+    get:
+      summary: Get a specific company
+      description: Retrieve details of a specific company by ID.
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          description: ID of the company
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: 
+                companyId: 1
+                name: "Tech Solutions"
+                description: "Innovative tech solutions provider."
+                logo: "https://example.com/tech-solutions-logo.jpg"
+                country: "United States"
+                city: "San Francisco"
+                address: "123 Tech Street"
+                postalCode: "12345"
+                contactEmail: "info@techsolutions.com"
+                contactPhone: "+1-555-123-4567"
+                contactPerson: "John Doe"
+                website: "https://www.techsolutions.com"
+                domainOfActivity: "Technology"
+                mcc: "1234"
+                companyType: "Producer"
+                users:
+                  - userId: 101
+                    username: "tech_user1"
+                    email: "user1@techsolutions.com"
+                  - userId: 102
+                    username: "tech_user2"
+                    email: "user2@techsolutions.com"
+                metaTags: ["tech", "innovation", "solutions"]
+                keywords: ["technology", "services", "innovation"]
+                status: "Active"
+
+    put:
+      summary: Update a company
+      description: Update the details of a specific company by ID.
+      parameters:
+        - name: companyId
+          in: path
+          required: true
+          description: ID of the company
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example: 
+              name: "Updated Tech Solutions"
+              description: "Innovative tech solutions provider with updates."
+              logo: "https://example.com/updated-tech-solutions-logo.jpg"
+              country: "United States"
+              city: "San Francisco"
+              address: "123 Updated Tech Street"
+              postalCode: "54321"
+              contactEmail: "info@updatedtechsolutions.com"
+              contactPhone: "+1-555-987-6543"
+              contactPerson: "Jane Smith"
+              website: "https://www.updatedtechsolutions.com"
+              domainOfActivity: "Technology"
+              mcc: "1234"
+              companyType: "Distributor"
+              users:
+                - userId: 101
+                  username: "tech_user1"
+                  email: "user1@updatedtechsolutions.com"
+                - userId: 102
+                  username: "tech_user2"
+                  email: "user2@updatedtechsolutions.com"
+              metaTags: ["tech", "innovation", "solutions"]
+              keywords: ["technology", "services", "innovation"]
+              status: "Active"
+      responses:
+        '200':
+          description: Company updated successfully
+          content:
+            application/json:
+              example: 
+                companyId: 1
+                name: "Updated Tech Solutions"
+                description: "Innovative tech solutions provider with updates."
+                logo: "https://example.com/updated-tech-solutions-logo.jpg"
+                country: "United States"
+                city: "San Francisco"
+                address: "123 Updated Tech Street"
+                postalCode: "54321"
+                contactEmail: "info@updatedtechsolutions.com"
+                contactPhone: "+1-555-987-6543"
+                contactPerson: "Jane Smith"
+                website: "https://www.updatedtechsolutions.com"
+                domainOfActivity: "Technology"
+                companyType: "Distributor"
+                users:
+                  - userId: 101
+                    username: "tech_user1"
+                    email: "user1@updatedtechsolutions.com"
+                  - userId: 102
+                    username: "tech_user2"
+                    email: "user2@updatedtechsolutions.com"
+                metaTags: ["tech", "innovation", "solutions"]
+                keywords: ["technology", "services", "innovation"]
+                status: "Active"
+

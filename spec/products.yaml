@@ -1,0 +1,265 @@
+openapi: 3.0.0
+info:
+  title: Marketplace API - Products
+  version: 1.0.0
+paths:
+  /products:
+    get:
+      summary: Get all products or products of a specific category and/or company
+      description: Retrieve a list of all products or products of a specific category and/or company in the marketplace.
+      parameters:
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: category
+          in: query
+          description: Filter by category
+          required: false
+          schema:
+            type: string
+        - name: companyId
+          in: query
+          description: Filter by company ID
+          required: false
+          schema:
+            type: integer
+        - name: filterLogic
+          in: query
+          description: Filter logic (AND or OR)
+          required: false
+          schema:
+            type: string
+            enum: ["AND", "OR"]
+            default: "OR"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: 
+                - productId: 1
+                  name: "Smartphone X"
+                  description: "A powerful and feature-rich smartphone."
+                  price: 699.99
+                  category: "Electronics"
+                  companyId: 1
+                  mainImage: 
+                    url: "https://example.com/smartphone-x-main.jpg"
+                    metaTags: ["powerful", "smartphone", "technology"]
+                    keywords: ["electronics", "mobile", "gadget"]
+                  images:
+                    - url: "https://example.com/smartphone-x-image1.jpg"
+                      main: true
+                      metaTags: ["powerful", "camera", "innovation"]
+                      keywords: ["smartphone", "photography"]
+                    - url: "https://example.com/smartphone-x-image2.jpg"
+                      metaTags: ["features", "innovation", "display"]
+                      keywords: ["smartphone", "technology"]
+                  metaTags: ["smartphone", "electronics", "technology"]
+                  keywords: ["mobile", "innovation", "gadget"]
+                  status: "Active"
+                - productId: 2
+                  name: "Laptop Pro"
+                  description: "High-performance laptop for professionals."
+                  price: 1299.99
+                  category: "Electronics"
+                  companyId: 1
+                  mainImage: 
+                    url: "https://example.com/laptop-pro-main.jpg"
+                    metaTags: ["professional", "performance", "laptop"]
+                    keywords: ["electronics", "business", "technology"]
+                  images:
+                    - url: "https://example.com/laptop-pro-image1.jpg"
+                      main: true
+                      metaTags: ["design", "portability", "work"]
+                      keywords: ["laptop", "office", "mobility"]
+                    - url: "https://example.com/laptop-pro-image2.jpg"
+                      metaTags: ["performance", "innovation", "display"]
+                      keywords: ["laptop", "technology"]
+                  metaTags: ["laptop", "electronics", "business"]
+                  keywords: ["performance", "technology"]
+                  status: "Active"
+
+    post:
+      summary: Create a new product
+      description: Add a new product to the marketplace.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example: 
+              name: "Tablet A"
+              description: "Compact and versatile tablet."
+              price: 299.99
+              category: "Electronics"
+              companyId: 1
+              mainImage: 
+                url: "https://example.com/tablet-a-main.jpg"
+                metaTags: ["compact", "versatile", "tablet"]
+                keywords: ["electronics", "mobile", "portable"]
+              images:
+                - url: "https://example.com/tablet-a-image1.jpg"
+                  main: true
+                  metaTags: ["multifunctional", "entertainment", "travel"]
+                  keywords: ["tablet", "entertainment"]
+                - url: "https://example.com/tablet-a-image2.jpg"
+                  metaTags: ["design", "performance", "display"]
+                  keywords: ["tablet", "technology"]
+              metaTags: ["tablet", "electronics", "portable"]
+              keywords: ["compact", "mobile", "multifunctional"]
+              status: "Active"
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              example: 
+                productId: 3
+                name: "Tablet A"
+                description: "Compact and versatile tablet."
+                price: 299.99
+                category: "Electronics"
+                companyId: 1
+                mainImage: 
+                  url: "https://example.com/tablet-a-main.jpg"
+                  metaTags: ["compact", "versatile", "tablet"]
+                  keywords: ["electronics", "mobile", "portable"]
+                images:
+                  - url: "https://example.com/tablet-a-image1.jpg"
+                    main: true
+                    metaTags: ["multifunctional", "entertainment", "travel"]
+                    keywords: ["tablet", "entertainment"]
+                  - url: "https://example.com/tablet-a-image2.jpg"
+                    metaTags: ["design", "performance", "display"]
+                    keywords: ["tablet", "technology"]
+                metaTags: ["tablet", "electronics", "portable"]
+                keywords: ["compact", "mobile", "multifunctional"]
+                status: "Active"
+
+  /products/{productId}:
+    get:
+      summary: Get a specific product
+      description: Retrieve details of a specific product by ID.
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: ID of the product
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example: 
+                productId: 1
+                name: "Smartphone X"
+                description: "A powerful and feature-rich smartphone."
+                price: 699.99
+                category: "Electronics"
+                companyId: 1
+                mainImage: 
+                  url: "https://example.com/smartphone-x-main.jpg"
+                  metaTags: ["powerful", "smartphone", "technology"]
+                  keywords: ["electronics", "mobile", "gadget"]
+                images:
+                  - url: "https://example.com/smartphone-x-image1.jpg"
+                    main: true
+                    metaTags: ["powerful", "camera", "innovation"]
+                    keywords: ["smartphone", "photography"]
+                  - url: "https://example.com/smartphone-x-image2.jpg"
+                    metaTags: ["features", "innovation", "display"]
+                    keywords: ["smartphone", "technology"]
+                metaTags: ["smartphone", "electronics", "technology"]
+                keywords: ["mobile", "innovation", "gadget"]
+                status: "Active"
+
+    put:
+      summary: Update a product
+      description: Update the details of a specific product by ID.
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: ID of the product
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            example: 
+              name: "Updated Smartphone X"
+              description: "An upgraded version of Smartphone X."
+              price: 799.99
+              category: "Electronics"
+              companyId: 1
+              mainImage: 
+                url: "https://example.com/updated-smartphone-x-main.jpg"
+                metaTags: ["updated", "smartphone", "technology"]
+                keywords: ["electronics", "mobile", "gadget"]
+              images:
+                - url: "https://example.com/updated-smartphone-x-image1.jpg"
+                  main: true
+                  metaTags: ["upgraded", "camera", "innovation"]
+                  keywords: ["smartphone", "photography"]
+                - url: "https://example.com/updated-smartphone-x-image2.jpg"
+                  metaTags: ["features", "innovation", "display"]
+                  keywords: ["smartphone", "technology"]
+              metaTags: ["updated", "smartphone", "technology"]
+              keywords: ["mobile", "innovation", "gadget"]
+              status: "Active"
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              example: 
+                productId: 1
+                name: "Updated Smartphone X"
+                description: "An upgraded version of Smartphone X."
+                price: 799.99
+                category: "Electronics"
+                companyId: 1
+                mainImage: 
+                  url: "https://example.com/updated-smartphone-x-main.jpg"
+                  metaTags: ["updated", "smartphone", "technology"]
+                  keywords: ["electronics", "mobile", "gadget"]
+                images:
+                  - url: "https://example.com/updated-smartphone-x-image1.jpg"
+                    main: true
+                    metaTags: ["upgraded", "camera", "innovation"]
+                    keywords: ["smartphone", "photography"]
+                  - url: "https://example.com/updated-smartphone-x-image2.jpg"
+                    metaTags: ["features", "innovation", "display"]
+                    keywords: ["smartphone", "technology"]
+                metaTags: ["updated", "smartphone", "technology"]
+                keywords: ["mobile", "innovation", "gadget"]
+                status: "Active"
+
+    delete:
+      summary: Delete a product
+      description: Delete a specific product by ID.
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: ID of the product
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Product deleted successfully
+
